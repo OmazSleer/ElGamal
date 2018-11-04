@@ -12,16 +12,15 @@ type
   TArrayInt = array of integer;
 
 var
-  p, i, g, counter, x, y, counter_of_choices: Integer;
+  p, i, g, counter, x, y, counter_of_choices, k: Integer;
   prime, bol: Boolean;
   Array_of_primes, Array_of_choices: TArrayInt;
 
 procedure Root(var p, counter_of_choices_test: integer; var Aray, Aray_of_choices: TArrayInt);
 var
-  k, t, j: integer;
+  k, j: integer;
   bole: boolean;
 begin
-  t := 0;
   counter_of_choices_test := 0;
   for k := 1 to counter do
   begin
@@ -103,6 +102,21 @@ begin
   y := Round(Exp(x * Ln(g))) mod p;
   Writeln;
   Writeln('y: ', y);
+  Writeln;
+  k := 0;
+  while (k <= 1) or (k >= p - 1) or (not prime) do
+  begin
+    prime := True;
+    Writeln('Input k:');
+    Readln(k);
+    for i := 2 to p - 1 do
+    begin
+      if ((p - 1) mod i = 0) and (k mod i = 0) then
+        prime := False;
+    end;
+  end;
+  Writeln;
+  Writeln('k: ', k);
 
   Readln;
 end.
