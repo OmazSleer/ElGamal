@@ -12,25 +12,41 @@ type
   TArrayInt = array of integer;
 
 var
-  p, i, g, counter: Integer;
-  prime: Boolean;
-  Array_of_primes: TArrayInt;
+  p, i, g, counter, x, y, counter_of_choices: Integer;
+  prime, bol: Boolean;
+  Array_of_primes, Array_of_choices: TArrayInt;
 
-function Root(p: integer; var Aray: TArrayInt): Integer;
+procedure Root(var p, counter_of_choices_test: integer; var Aray, Aray_of_choices: TArrayInt);
 var
-  k, t: integer;
+  k, t, j: integer;
+  bole: boolean;
 begin
+  t := 0;
+  counter_of_choices_test := 0;
   for k := 1 to counter do
   begin
-    t := Random(p - 2) + 2;
-    if (Power(g, (p - 1) / Aray[k - 1])) = (1 mod p) then
-      Root(t, Aray);
+    for j := 2 to p - 1 do
+    begin
+      if (Round((Power(j, (p - 1) / Aray[k - 1]))) mod p) = 1 then
+      begin
+        bole := true;
+        for i := 0 to counter_of_choices_test - 1 do
+          if j = Aray_of_choices[i] then
+            bole := false;
+        if bole then
+        begin
+          inc(counter_of_choices_test);
+          SetLength(Aray_of_choices, counter_of_choices_test);
+          Aray_of_choices[counter_of_choices_test - 1] := j;
+        end;
+      end;
+    end;
   end;
-   result := t;
 end;
 
 begin
   prime := False;
+  p := 0;
   Randomize;
   while prime = False do
   begin
@@ -46,6 +62,7 @@ begin
       end;
     end;
   end;
+
   counter := 0;
   for i := 2 to p - 1 do
   begin
@@ -57,9 +74,35 @@ begin
     end;
   end;
 
-  g := Root(p,Array_of_primes);
-  Writeln(g);
-  Sleep(222222);
+  Root(p, counter_of_choices, Array_of_primes, Array_of_choices);
 
+  for i := 0 to counter_of_choices - 1 do
+    write(Array_of_choices[i], ' ');
+
+  repeat
+    bol := false;
+    Writeln('Input g');
+    Readln(x);
+    for i := 0 to counter_of_choices - 1 do
+      if x = Array_of_choices[i] then
+      begin
+        bol := true;
+      end;
+  until bol = true;
+  Writeln('g: ', g);
+  Writeln;
+
+  x := 1;
+  while (x = 1) or (x >= p - 1) do
+  begin
+    Writeln('Input x:');
+    Readln(x);
+  end;
+
+  y := Round(Exp(x * Ln(g))) mod p;
+  Writeln;
+  Writeln('y: ', y);
+
+  Readln;
 end.
 
