@@ -88,9 +88,10 @@ begin
       begin
         bol := true;
       end;
-  until bol = true;
-  Writeln('g: ', g);
+  until bol = True;
+  Writeln('g: ', x);
   Writeln;
+  g := x;
 
   x := 1;
   while (x = 1) or (x >= p - 1) do
