@@ -8,5 +8,5 @@ uses
   System.SysUtils;
 
 begin
-
+  Writeln('Amazasp gay');
 end.
