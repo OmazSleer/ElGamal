@@ -14,7 +14,7 @@ type
   TByteArray = array of Byte;
 
 var
-  p, i, g, counter, x, y, counter_of_choices, a, b: Integer;
+  p, i, g, counter, x, y, counter_of_choices, a, b, k: Integer;
   prime, bol: Boolean;
   Array_of_primes, Array_of_choices: TArrayInt;
   Byte_Array: TByteArray;
@@ -22,16 +22,15 @@ var
 
 procedure Root(var p, counter_of_choices_test: integer; var Aray, Aray_of_choices: TArrayInt);
 var
-  k, t, j: integer;
+  k, j: integer;
   bole: boolean;
 begin
-  t := 0;
   counter_of_choices_test := 0;
   for k := 1 to counter do
   begin
     for j := 2 to p - 1 do
     begin
-      if (Round((Power(j, (p - 1) / Aray[k - 1]))) mod p) = 1 then
+      if (Round((Power(j, (p - 1) / Aray[k - 1]))) mod p) <> 1 then
       begin
         bole := true;
         for i := 0 to counter_of_choices_test - 1 do
@@ -68,6 +67,7 @@ begin
   end;
 
   counter := 0;
+
   for i := 2 to p - 1 do
   begin
     if ((p - 1) mod i) = 0 then
@@ -115,8 +115,30 @@ begin
 
   for i := 1 to Length(s) do
     write(Byte_Array[i - 1], ' ');
-  {a := Round(Power(g, k)) mod p;
-  b := Round(Power(y,k)*m) mod p;}
+
+    Writeln;
+  k := 0;
+  while (k <= 1) or (k >= p - 1) or (not prime) do
+  begin
+    prime := True;
+    Writeln('Input k:');
+    Readln(k);
+    for i := 2 to p - 1 do
+    begin
+      if ((p - 1) mod i = 0) and (k mod i = 0) then
+        prime := False;
+    end;
+  end;
+  Writeln;
+  Writeln('k: ', k);
+
+  for i := 0 to Length(s) - 1 do
+  begin
+    a := Round(Power(g, k)) mod p;
+    b := Round(Power(y, k) * Byte_Array[i]) mod p;
+    Writeln('a = ',a);
+    Writeln('b = ',b);
+  end;
 
   Readln;
 end.
